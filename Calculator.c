@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+#include<limits.h>
 
 // removing spaces
 void removeSpaces(char arr[])
@@ -51,7 +52,13 @@ int handle_Operators(int newNumber[], char newOperator[], int number[], char ope
     {
         if (operator[i] == '*')
         {
-            temp = temp * number[i + 1];
+            long long tempResult = (long long)temp * (long long)number[i+1];
+            if(tempResult > INT_MAX || tempResult < INT_MIN)
+            {
+                printf("Error: Interger Overflow\n");
+                return 0;
+            }
+            temp = (int)tempResult;
         }
         else if (operator[i] == '/')
         {
@@ -60,6 +67,7 @@ int handle_Operators(int newNumber[], char newOperator[], int number[], char ope
                 printf("Error: Division by Zero");
                 return 0;
             }
+
 
             temp = temp / number[i + 1];
         }
@@ -81,16 +89,28 @@ int handle_Operators(int newNumber[], char newOperator[], int number[], char ope
 void handleOperators(int newNum[], char newOp[], int *newOpCount)
 {
     int result = newNum[0];
+    long long tempResult;
     for (int i = 0; i < *newOpCount; i++)
     {
         if (newOp[i] == '+')
         {
-            result = result + newNum[i + 1];
+            tempResult = (long long)result + (long long)newNum[i+1];
+            if (tempResult > INT_MAX || tempResult < INT_MIN)
+            {
+                printf("Error: Integer Overflow\n");
+                return;
+            }
         }
         else
         {
-            result = result - newNum[i + 1];
+            tempResult = (long long)result - (long long)newNum[i+1];
+            if (tempResult > INT_MAX || tempResult < INT_MIN)
+            {
+                printf("Error: Integer Overflow \n");
+                return;
+            }
         }
+        result = (int)tempResult;
     }
     printf("Result is : %d", result);
 }
@@ -100,6 +120,8 @@ int main()
     printf("Enter Expression: \n");
     char exp[100];
     fgets(exp, sizeof(exp), stdin);
+    exp[strcspn(exp, "\n")] = '\0';
+
 
     removeSpaces(exp);
 
@@ -119,6 +141,12 @@ int main()
 
     storingValues(number, operator, exp, &numCount, &opCount);
 
+    if(opCount >= numCount)
+    {
+        printf("Error: Invalid Operands\n");
+        return 1;
+    }
+
     int newNum[100];
     int newNumCount = 0;
     char newOp[100];
@@ -129,5 +157,5 @@ int main()
         return 0;
     }
 
-    handleOperators(newNum, newOp, &newOpCount);
+    handleOperators(newNum, newOp, &newOpCount);  
 }
