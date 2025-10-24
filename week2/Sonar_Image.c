@@ -114,7 +114,7 @@ int main()
     
     int matrix[10][10];
 
-    generate_matrix(matrix, num);  // Generate a random matrix
+    generate_matrix(matrix, num);  // Generate random matrix
 
     printf("Original Matrix\n");
     printing_matrix(matrix, num); // Printing matrix
