@@ -10,7 +10,7 @@ void generate_matrix(int (*matrix)[10], int num)
     {
         for(int col=0; col<num; col++)
         {
-            // matrix[i][j] = rand() % 256;
+            
             *(*(matrix + row) + col) = rand() % 256;
         }
     }
@@ -34,10 +34,6 @@ void rotate_matrix(int (*matrix)[10], int num)
     {
         for(int col=row+1; col<num; col++)
         {
-            // int tempValue = matrix[i][j];
-            // matrix[i][j] = matrix[j][i];
-            // matrix[j][i] = tempValue;
-
             int tempValue = *(*(matrix + row) + col);
             *(*(matrix + row) + col) = *(*(matrix + col) + row);
             *(*(matrix + col) + row) = tempValue;
@@ -54,11 +50,6 @@ void rotate_matrix(int (*matrix)[10], int num)
 
             while(start <= end)
             {
-                // int tempValue = matrix[i][start];
-                // matrix[i][start] = matrix[i][end];
-                // matrix[i][end] = tempValue;
-                // start++;
-                // end--;
 
                 int tempValue = *(*(matrix + row) + start);
                 *(*(matrix + row) + start) = *(*(matrix + row) + end);
@@ -87,14 +78,12 @@ void smoothing_filter(int (*matrix)[10], int num)
                 {
                     if(k >= 0 && k < num && l >= 0 && l < num)
                     {
-                        // sum = sum + (matrix[k][l] % max_value);
                         sum = sum + *(*(matrix + k) + l) % max_value;
                         count++;
                     }
                 }
             }
             int newValue = sum / count;
-            // matrix[i][j] = matrix[i][j] + newValue * max_value;
             *(*(matrix + row) + col) = *(*(matrix + row) + col) + newValue * max_value;
 
         }
@@ -105,7 +94,6 @@ void smoothing_filter(int (*matrix)[10], int num)
     {
         for(int col=0; col<num; col++)
         {
-            // matrix[i][j] = matrix[i][j] / max_value;
             *(*(matrix + row) + col) = *(*(matrix + row) + col) / max_value;
         }
     }
