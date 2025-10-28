@@ -11,28 +11,28 @@ struct ProductDetails
     int productQuantity;
 };
 
-void input_details(struct ProductDetails *pd, int numberOfProducts)
+void input_details(struct ProductDetails *productDetail, int numberOfProducts)
 {
     for (int product = 0; product < numberOfProducts; product++)
     {
         printf("Enter details for product %d:\n", product + 1);
         printf("Product ID: ");
-        scanf("%d", &pd[product].productID);
+        scanf("%d", &productDetail[product].productID);
         printf("Product Name: ");
-        scanf("%s", pd[product].productName);
+        scanf("%s", productDetail[product].productName);
         printf("Product Price: ");
-        scanf("%f", &pd[product].productPrice);
+        scanf("%f", &productDetail[product].productPrice);
         printf("Product Quantity: ");
-        scanf("%d", &pd[product].productQuantity);
+        scanf("%d", &productDetail[product].productQuantity);
     }
 }
 
-void add_new_product(struct ProductDetails **pd, int *numberOfProducts)
+void add_new_product(struct ProductDetails **productDetail, int *numberOfProducts)
 {
     (*numberOfProducts)++;
-    *pd = (struct ProductDetails *)realloc(*pd, (*numberOfProducts) * sizeof(struct ProductDetails));
+    *productDetail = (struct ProductDetails *)realloc(*productDetail, (*numberOfProducts) * sizeof(struct ProductDetails));
 
-    if (*pd == NULL)
+    if (*productDetail == NULL)
     {
         printf("Memeory reallocation failed");
         return;
@@ -40,29 +40,29 @@ void add_new_product(struct ProductDetails **pd, int *numberOfProducts)
 
     printf("Enter new Product Details: \n");
     printf("Product ID: ");
-    scanf("%d", &(*pd)[(*numberOfProducts) - 1].productID);
+    scanf("%d", &(*productDetail)[(*numberOfProducts) - 1].productID);
     printf("Product Name: ");
-    scanf("%s", (*pd)[(*numberOfProducts) - 1].productName);
+    scanf("%s", (*productDetail)[(*numberOfProducts) - 1].productName);
     printf("Product Price: ");
-    scanf("%f", &(*pd)[(*numberOfProducts) - 1].productPrice);
+    scanf("%f", &(*productDetail)[(*numberOfProducts) - 1].productPrice);
     printf("Product Quantity: ");
-    scanf("%d", &(*pd)[(*numberOfProducts) - 1].productQuantity);
+    scanf("%d", &(*productDetail)[(*numberOfProducts) - 1].productQuantity);
     printf("Product added successfully!");
 
     printf("\n");
 }
 
-void view_products(struct ProductDetails *pd, int numberOfProducts)
+void view_products(struct ProductDetails *productDetail, int numberOfProducts)
 {
     for (int product = 0; product < numberOfProducts; product++)
     {
-        printf("Product ID: %d | Name: %s | Price: %.2f | Quantity: %d", pd[product].productID, pd[product].productName, pd[product].productPrice, pd[product].productQuantity);
+        printf("Product ID: %d | Name: %s | Price: %.2f | Quantity: %d", productDetail[product].productID, productDetail[product].productName, productDetail[product].productPrice, productDetail[product].productQuantity);
         printf("\n");
     }
     printf("\n");
 }
 
-void update_quantity(struct ProductDetails *pd, int numberOfProducts)
+void update_quantity(struct ProductDetails *productDetail, int numberOfProducts)
 {
     int id;
     printf("Enter Product ID to update quantity: ");
@@ -76,9 +76,9 @@ void update_quantity(struct ProductDetails *pd, int numberOfProducts)
 
     for (int product = 0; product < numberOfProducts; product++)
     {
-        if (pd[product].productID == id)
+        if (productDetail[product].productID == id)
         {
-            pd[product].productQuantity = newQuantity;
+            productDetail[product].productQuantity = newQuantity;
             found = 1;
         }
     }
@@ -93,7 +93,7 @@ void update_quantity(struct ProductDetails *pd, int numberOfProducts)
     printf("\n");
 }
 
-void search_by_id(struct ProductDetails *pd, int numberOfProducts)
+void search_by_id(struct ProductDetails *productDetail, int numberOfProducts)
 {
     int searchId;
     printf("Enter Product ID to search: ");
@@ -102,9 +102,9 @@ void search_by_id(struct ProductDetails *pd, int numberOfProducts)
     int found = 0;
     for (int product = 0; product < numberOfProducts; product++)
     {
-        if (pd[product].productID == searchId)
+        if (productDetail[product].productID == searchId)
         {
-            printf("Product Found : Product ID: %d | Name: %s | Price: %.2f | Quantity: %d\n", pd[product].productID, pd[product].productName, pd[product].productPrice, pd[product].productQuantity);
+            printf("Product Found : Product ID: %d | Name: %s | Price: %.2f | Quantity: %d\n", productDetail[product].productID, productDetail[product].productName, productDetail[product].productPrice, productDetail[product].productQuantity);
             found = 1;
         }
     }
@@ -115,7 +115,7 @@ void search_by_id(struct ProductDetails *pd, int numberOfProducts)
     printf("\n");
 }
 
-void search_by_name(struct ProductDetails *pd, int numberOfProducts)
+void search_by_name(struct ProductDetails *productDetail, int numberOfProducts)
 {
     char name[20];
     printf("Enter name to search (partial allowed): ");
@@ -124,9 +124,9 @@ void search_by_name(struct ProductDetails *pd, int numberOfProducts)
     int found = 0;
     for (int product = 0; product < numberOfProducts; product++)
     {
-        if (strstr(pd[product].productName, name) != NULL)
+        if (strstr(productDetail[product].productName, name) != NULL)
         {
-            printf("Product Found : Product ID: %d | Name: %s | Price: %.2f | Quantity: %d\n", pd[product].productID, pd[product].productName, pd[product].productPrice, pd[product].productQuantity);
+            printf("Product Found : Product ID: %d | Name: %s | Price: %.2f | Quantity: %d\n", productDetail[product].productID, productDetail[product].productName, productDetail[product].productPrice, productDetail[product].productQuantity);
             found = 1;
         }
     }
@@ -137,7 +137,7 @@ void search_by_name(struct ProductDetails *pd, int numberOfProducts)
     printf("\n");
 }
 
-void search_by_price(struct ProductDetails *pd, int numberOfProducts)
+void search_by_price(struct ProductDetails *productDetail, int numberOfProducts)
 {
     int minimumPrice, maximumPrice;
     printf("Enter minimum price: ");
@@ -148,9 +148,9 @@ void search_by_price(struct ProductDetails *pd, int numberOfProducts)
     int found = 0;
     for (int product = 0; product < numberOfProducts; product++)
     {
-        if (pd[product].productPrice >= minimumPrice && pd[product].productPrice <= maximumPrice)
+        if (productDetail[product].productPrice >= minimumPrice && productDetail[product].productPrice <= maximumPrice)
         {
-            printf("Product Found : Product ID: %d | Name: %s | Price: %.2f | Quantity: %d\n", pd[product].productID, pd[product].productName, pd[product].productPrice, pd[product].productQuantity);
+            printf("Product Found : Product ID: %d | Name: %s | Price: %.2f | Quantity: %d\n", productDetail[product].productID, productDetail[product].productName, productDetail[product].productPrice, productDetail[product].productQuantity);
             found = 1;
         }
     }
@@ -161,7 +161,7 @@ void search_by_price(struct ProductDetails *pd, int numberOfProducts)
     }
 }
 
-void delete_by_id(struct ProductDetails **pd, int *numberOfProducts)
+void delete_by_id(struct ProductDetails **productDetail, int *numberOfProducts)
 {
     int deleteId;
     printf("Enter product id to delete: ");
@@ -171,20 +171,20 @@ void delete_by_id(struct ProductDetails **pd, int *numberOfProducts)
 
     for (int product = 0; product < (*numberOfProducts); product++)
     {
-        if ((*pd)[product].productID == deleteId)
+        if ((*productDetail)[product].productID == deleteId)
         {
             found = 1;
 
             for (int j = product; j < (*numberOfProducts) - 1; j++)
             {
-                (*pd)[j] = (*pd)[j + 1];
+                (*productDetail)[j] = (*productDetail)[j + 1];
             }
 
             (*numberOfProducts)--;
 
-            (*pd) = (struct ProductDetails *)realloc((*pd), (*numberOfProducts) * sizeof(struct ProductDetails));
+            (*productDetail) = (struct ProductDetails *)realloc((*productDetail), (*numberOfProducts) * sizeof(struct ProductDetails));
 
-            if ((*pd) == NULL)
+            if ((*productDetail) == NULL)
             {
                 printf("Reallocation failed");
                 return;
@@ -201,10 +201,10 @@ void delete_by_id(struct ProductDetails **pd, int *numberOfProducts)
     }
 }
 
-void exit_program(struct ProductDetails *pd)
+void exit_program(struct ProductDetails *productDetail)
 {
-    free(pd);
-    pd = NULL;
+    free(productDetail);
+    productDetail = NULL;
 
     printf("Memory released successfully. Exiting program...");
 }
@@ -214,16 +214,16 @@ int main()
     printf("Enter initial number of products: ");
     scanf("%d", &numberOfProducts);
 
-    struct ProductDetails *pd = (struct ProductDetails *)calloc(numberOfProducts, sizeof(struct ProductDetails));
+    struct ProductDetails *productDetail = (struct ProductDetails *)calloc(numberOfProducts, sizeof(struct ProductDetails));
 
-    if (pd == NULL)
+    if (productDetail == NULL)
     {
         printf("Memory allocation failed");
         return 1;
     }
 
     // Getting Input about product deatils
-    input_details(pd, numberOfProducts);
+    input_details(productDetail, numberOfProducts);
 
     printf("\n");
 
@@ -245,36 +245,36 @@ int main()
         printf("\n");
         if (choice == 1)
         {
-            add_new_product(&pd, &numberOfProducts);   // Add New Product
+            add_new_product(&productDetail, &numberOfProducts);   // Add New Product
         }
 
         else if (choice == 2)
         {
-            view_products(pd, numberOfProducts);      // View All Products
+            view_products(productDetail, numberOfProducts);      // View All Products
         }
         else if (choice == 3)
         {
-            update_quantity(pd, numberOfProducts);    // Update Quantity
+            update_quantity(productDetail, numberOfProducts);    // Update Quantity
         }
         else if (choice == 4)
         {
-            search_by_id(pd, numberOfProducts);       // Search Product by ID
+            search_by_id(productDetail, numberOfProducts);       // Search Product by ID
         }
         else if (choice == 5)
         {
-            search_by_name(pd, numberOfProducts);     // Search Product by Name
+            search_by_name(productDetail, numberOfProducts);     // Search Product by Name
         }
         else if (choice == 6)
         {
-            search_by_price(pd, numberOfProducts);    // Search Product by Price
+            search_by_price(productDetail, numberOfProducts);    // Search Product by Price
         }
         else if (choice == 7)
         {
-            delete_by_id(&pd, &numberOfProducts);     // Delete Product
+            delete_by_id(&productDetail, &numberOfProducts);     // Delete Product
         }
         else if (choice == 8)
         {
-            exit_program(pd);                         // Exit Program
+            exit_program(productDetail);                         // Exit Program
         }
 
         printf("\n");
