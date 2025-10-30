@@ -13,9 +13,9 @@ struct ProductDetails
 
 bool isDuplicateID(struct ProductDetails *productDetail, int numberOfProducts, int id)
 {
-    for(int idx=0; idx<numberOfProducts; idx++)
+    for(int product=0; product<numberOfProducts; product++)
     {
-        if(productDetail[idx].id == id)
+        if(productDetail[product].id == id)
         {
             return true;
         }
@@ -23,7 +23,7 @@ bool isDuplicateID(struct ProductDetails *productDetail, int numberOfProducts, i
     return false;
 }
 
-void input_details(struct ProductDetails *productDetail, int numberOfProducts)
+void add_details(struct ProductDetails *productDetail, int numberOfProducts)
 {
     for (int product = 0; product < numberOfProducts; product++)
     {
@@ -92,19 +92,19 @@ void input_details(struct ProductDetails *productDetail, int numberOfProducts)
 void add_new_product(struct ProductDetails **productDetail, int *numberOfProducts)
 {
 
-    int newID;
+    int newProductId;
 
     while(1)
         {
             printf("Enter Product id: ");
-            if(scanf("%d", &newID) != 1 || newID < 0)
+            if(scanf("%d", &newProductId) != 1 || newProductId < 0)
             {
                 while(getchar() != '\n');
                 printf("---- Please Enter a valid product id ----\n");
                 continue;
             }
 
-            if(isDuplicateID(*productDetail, *numberOfProducts, newID))
+            if(isDuplicateID(*productDetail, *numberOfProducts, newProductId))
             {
                 printf("---- Please enter a unique id ----\n");
                 continue;
@@ -124,7 +124,7 @@ void add_new_product(struct ProductDetails **productDetail, int *numberOfProduct
     }
 
     printf("Enter new Product Details: \n");
-    (*productDetail)[(*numberOfProducts) - 1].id = newID;
+    (*productDetail)[(*numberOfProducts) - 1].id = newProductId;
     printf("Product Name: ");
     scanf("%s", (*productDetail)[(*numberOfProducts) - 1].name);
 
@@ -396,7 +396,7 @@ int main()
     }
 
     // Getting Input about product deatils
-    input_details(productDetail, numberOfProducts);
+    add_details(productDetail, numberOfProducts);
 
     printf("\n");
 
